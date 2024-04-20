@@ -170,6 +170,10 @@ One way we can view the filesystem of that VM is to use a [container image](http
 
 ***NOTE:** Generally you should be careful running containers in privileged mode with access to the host system in this way. Only do it if you have a specific reason to do so and you trust the container image.*
 
+PID (Process ID - İşlem Kimliği), bir işlemin benzersiz tanımlayıcısıdır ve işletim sistemi tarafından işlem yönetimi için kullanılır. Her çalışan işlemin kendine özgü bir PID'si vardır.
+
+İşletim sistemi, çalışan tüm işlemlere benzersiz bir PID atar ve bu PID'ler sürecin yönetiminde kullanılır. PID'ler, işlemlerin kimliklerini belirler ve işletim sistemi tarafından işlemlere erişmek veya onları izlemek için kullanılır.
+
 ```bash
 # Create a container that can access the Docker Linux VM
 # Pinning to the image hash ensures it is this SPECIFIC image and not an updated one helps minimize the potential of a supply chain attack
@@ -184,6 +188,8 @@ This approach can then be used to mount a volume at the known path where a progr
 ```bash
 # Create a container from the postgres container image and mount its known storage path into a volume named pgdata
 docker run -it --rm -v pgdata:/var/lib/postgresql/data -e POSTGRES_PASSWORD=foobarbaz postgres:15.1-alpine
+
+#-v pgdata:/var/lib/postgresql/data: Bu, bir Docker volume'u oluşturur ve adı pgdata olarak belirlenir. Bu volume, PostgreSQL konteynerinin veri dizinini (/var/lib/postgresql/data) host dosya sistemi yerine kullanıcı tarafından belirlenen bu adlandırılmış volume'a bağlar. Bu, PostgreSQL veritabanının verilerinin kalıcı olarak saklanmasını sağlar. Yani, konteyneri her başlattığınızda, veriler kaybolmaz.
 ```
 
 #### ii. Bind Mounts
@@ -242,6 +248,9 @@ docker run -d --rm \
   -e POSTGRES_PASSWORD=foobarbaz \
   -p 5432:5432 \
   postgres:15.1-alpine -c 'config_file=/etc/postgresql/postgresql.conf'
+
+  #-v ${PWD}/postgres.conf:/etc/postgresql/postgresql.conf: Host makinedeki (ana bilgisayar) postgres.conf dosyasını konteynerdeki /etc/postgresql/postgresql.conf dizinine bağlar. Bu dosya, özel yapılandırma ayarlarını içerir ve PostgreSQL konteynerindeki yapılandırmayı değiştirir.
+#-c 'config_file=/etc/postgresql/postgresql.conf': PostgreSQL başlatılırken, özel yapılandırma dosyasını kullanması için bir komut geçirir.
 ```
 
 #### Mongo
