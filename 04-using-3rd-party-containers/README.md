@@ -174,6 +174,7 @@ PID (Process ID - İşlem Kimliği), bir işlemin benzersiz tanımlayıcısıdı
 
 İşletim sistemi, çalışan tüm işlemlere benzersiz bir PID atar ve bu PID'ler sürecin yönetiminde kullanılır. PID'ler, işlemlerin kimliklerini belirler ve işletim sistemi tarafından işlemlere erişmek veya onları izlemek için kullanılır.
 
+### Aşağıdaki kod ile kaydedilen data'lara erişiyoruz.
 ```bash
 # Create a container that can access the Docker Linux VM
 # Pinning to the image hash ensures it is this SPECIFIC image and not an updated one helps minimize the potential of a supply chain attack
